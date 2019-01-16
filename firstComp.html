@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Component assignment</title>
+  </head>
+  <body>
+    <div id="app"></div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.1.0/umd/react.development.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.1.0/umd/react-dom.development.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+      <script type="text/babel">
+        /* practice with components as functions, calling 'props' from an object
+        */
+        // object with my info
+        const myPersonalInfo = {
+          name: "Matthew",
+          dob: "December 29",
+          favColor: "Purple"
+        }
+
+        // creating a React function component to tell a short story
+        function TellStory(props) {
+          return (
+            <div>
+              <h1>Hello, my name is {props.name},</h1>
+              <p>my birthday is {props.dob},</p>
+              <p>and my favourite colour is {props.favColor}.</p>
+              {console.log("This is javascript injected into the TellStory component functions returned JSX expression")}
+            </div>
+          );
+        }
+
+        // creating a class component to tell a fictional story, using props/state
+        class MakeFiction extends React.Component{
+          constructor(props){
+            // passing in the props from whatever renders it
+            super(props);
+
+            // our internal states for this makeFiction component
+            this.state = {
+              protagonist: "The Bride",
+              proPronouns: "F",
+              antagonist: "Bill",
+              antPronouns: "M"
+            }
+          }
+          render(){
+            return(
+              <div>
+                <p>There awoke, in an unknown {this.props.setting}, our {this.state.proPronouns === "F" ? 'heroine' : 'hero'} - known only as: <strong>{this.state.protagonist},</strong></p>
+                <p>{this.state.proPronouns === "F" ? 'her' : 'his'} desires were focused on a single trajectory: to find <strong>{this.state.antagonist}</strong>, and </p>
+                <h1>{this.props.plotAction} {this.state.antPronouns === "M" ? 'him' : 'her'}.</h1>
+              </div>
+            );
+          }
+        }
+
+        // passing my info to the story component
+        const myStory = TellStory(myPersonalInfo);
+        // rendering my story to the div with id 'app'
+        ReactDOM.render(
+          myStory, document.getElementById('app')
+        );
+
+        // creating an object storing a specific fictional setting/plotAction
+        const firstFiction = {
+          setting: 'desert',
+          plotAction: 'kill'
+        }
+
+        // rendering the MakeFiction component, using props with values from firstFiction
+        ReactDOM.render(
+          <MakeFiction setting = {firstFiction.setting} plotAction = {firstFiction.plotAction} />, document.getElementById('app')
+        );
+      </script>
+  </body>
+</html>
